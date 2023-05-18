@@ -1,5 +1,14 @@
 SELECT
-  lidesired - lipurchased AS "Items Still Desired"
+  ROUND(
+    (
+      1 - (
+        CAST(lidesired - lipurchased AS NUMERIC) / CAST(lidesired AS NUMERIC)
+      )
+    ) * 100
+    , 2
+  ) || '%' AS "Fulfillment"
 from
   listitems;
--- SELECT lidesired, lipurchased, lidesired - lipurchased AS "Items Still Desired" from listitems ORDER BY "Items Still Desired" DESC;
+-- SELECT ROUND((1 -(CAST(lidesired - lipurchased AS NUMERIC)/CAST(lidesired AS NUMERIC)))*100, 2) AS "Fulfillment" from listitems ORDER BY "Fulfillment" DESC;
+-- SELECT ROUND((1 -(CAST(lidesired - lipurchased AS NUMERIC)/CAST(lidesired AS NUMERIC)))*100, 2) || '%' AS "Fulfillment" from listitems ORDER BY "Fulfillment" DESC;
+-- SELECT ROUND((1 -(CAST(lidesired - lipurchased AS NUMERIC)/CAST(lidesired AS NUMERIC)))*100, 2) AS "Fulfillment", '%' from listitems ORDER BY "Fulfillment" DESC;
